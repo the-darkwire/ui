@@ -17,7 +17,7 @@ Shared UI library for the-darkwire org. Components built on React Native primiti
 ## Architecture
 
 - `src/tokens/` — design tokens (colors, spacing, fontSize, fontWeight, lineHeight, radii) as plain TS const objects.
-- `src/theme/tailwind-preset.ts` — Tailwind preset built from tokens. Consumers `presets: [require("@the-darkwire/ui/tailwind-preset").default]` in their `tailwind.config.js` and get all tokens as utility classes.
+- `src/theme/tailwind-preset.cjs` — Tailwind preset, **CommonJS** (not TS) because consumers' `tailwind.config.js` files are loaded by Node, which can't `require()` TypeScript. Consumers do `presets: [require("@the-darkwire/ui/tailwind-preset")]` in their `tailwind.config.js` and get all tokens as utility classes. **Token VALUES are duplicated here from `src/tokens/*.ts`** — when tokens change, update both files. A future build step (tsup/tsc) would DRY this up; deferred to keep the library zero-build.
 - `src/components/` — RN-primitive-based components. Each accepts a `className` (handled by NativeWind's JSX transform in the consumer's Babel config).
 - `src/index.ts` — flat public exports.
 
